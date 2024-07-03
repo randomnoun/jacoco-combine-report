@@ -12,7 +12,7 @@
  *******************************************************************************/
 package com.randomnoun.jacoco.report.internal.html.index;
 
-import org.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
 
 /**
  * Every report page that should become part of the index must be added via this

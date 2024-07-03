@@ -15,9 +15,8 @@ package com.randomnoun.jacoco.report.internal.html.index;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.index.IIndexUpdate;
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
 
 /**
  * An index over all report pages that allows queries according to certain

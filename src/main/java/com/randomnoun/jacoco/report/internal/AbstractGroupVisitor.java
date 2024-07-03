@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal;
+package com.randomnoun.jacoco.report.internal;
 
 import java.io.IOException;
 
@@ -19,6 +19,7 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ICoverageNode.ElementType;
 import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.ISourceFileLocator;
+import org.jacoco.report.internal.AbstractGroupVisitor;
 
 /**
  * Internal base visitor to calculate group counter summaries for hierarchical

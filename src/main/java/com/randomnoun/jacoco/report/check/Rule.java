@@ -10,13 +10,14 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jacoco.core.analysis.ICoverageNode.ElementType;
 import org.jacoco.core.runtime.WildcardMatcher;
+import org.jacoco.report.check.Limit;
 
 /**
  * A rule applies for a certain element type and can define any number of limits

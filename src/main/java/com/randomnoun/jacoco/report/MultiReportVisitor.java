@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +20,10 @@ import java.util.List;
 import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.SessionInfo;
+import org.jacoco.report.IReportGroupVisitor;
+import org.jacoco.report.IReportVisitor;
+import org.jacoco.report.ISourceFileLocator;
+import org.jacoco.report.MultiGroupVisitor;
 
 /**
  * A report visitor that is composed from multiple other visitors. This can be

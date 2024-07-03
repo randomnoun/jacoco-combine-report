@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.html;
+package com.randomnoun.jacoco.report.html;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -27,14 +27,11 @@ import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.IReportVisitor;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.JavaNames;
+import org.jacoco.report.html.HTMLFormatter;
 import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLGroupVisitor;
-import org.jacoco.report.internal.html.IHTMLReportContext;
 import org.jacoco.report.internal.html.ILinkable;
 import org.jacoco.report.internal.html.index.ElementIndex;
 import org.jacoco.report.internal.html.index.IIndexUpdate;
-import org.jacoco.report.internal.html.page.BundlePage;
-import org.jacoco.report.internal.html.page.ReportPage;
 import org.jacoco.report.internal.html.page.SessionsPage;
 import org.jacoco.report.internal.html.resources.Resources;
 import org.jacoco.report.internal.html.resources.Styles;
@@ -42,7 +39,12 @@ import org.jacoco.report.internal.html.table.BarColumn;
 import org.jacoco.report.internal.html.table.CounterColumn;
 import org.jacoco.report.internal.html.table.LabelColumn;
 import org.jacoco.report.internal.html.table.PercentageColumn;
-import org.jacoco.report.internal.html.table.Table;
+
+import com.randomnoun.jacoco.report.internal.html.HTMLGroupVisitor;
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.page.BundlePage;
+import com.randomnoun.jacoco.report.internal.html.page.ReportPage;
+import com.randomnoun.jacoco.report.internal.html.table.Table;
 
 /**
  * Formatter for coverage reports in multiple HTML pages.

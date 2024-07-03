@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import java.io.BufferedReader;
 import java.io.IOException;

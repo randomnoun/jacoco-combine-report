@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -20,6 +20,8 @@ import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
 import org.jacoco.report.internal.html.resources.Resources;
+import org.jacoco.report.internal.html.table.IColumnRenderer;
+import org.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Column for the item label. The implementation is stateless, instances might

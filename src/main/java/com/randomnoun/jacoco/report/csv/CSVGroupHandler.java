@@ -10,7 +10,7 @@
  *    Brock Janiczak - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.csv;
+package com.randomnoun.jacoco.report.csv;
 
 import java.io.IOException;
 
@@ -19,6 +19,8 @@ import org.jacoco.core.analysis.IClassCoverage;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.ISourceFileLocator;
+import org.jacoco.report.csv.CSVGroupHandler;
+import org.jacoco.report.csv.ClassRowWriter;
 
 /**
  * Report visitor that handles coverage information for groups.

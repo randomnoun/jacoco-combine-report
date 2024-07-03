@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html;
+package com.randomnoun.jacoco.report.internal.html;
 
 import org.jacoco.report.internal.ReportOutputFolder;
 

@@ -10,14 +10,16 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html;
+package com.randomnoun.jacoco.report.internal.html;
 
 import java.util.Locale;
 
 import org.jacoco.report.ILanguageNames;
+import org.jacoco.report.internal.html.ILinkable;
 import org.jacoco.report.internal.html.index.IIndexUpdate;
 import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.table.Table;
+
+import com.randomnoun.jacoco.report.internal.html.table.Table;
 
 /**
  * Context and configuration information during creation of a HTML report.

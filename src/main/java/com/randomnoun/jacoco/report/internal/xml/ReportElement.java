@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.xml;
+package com.randomnoun.jacoco.report.internal.xml;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,6 +21,8 @@ import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
 import org.jacoco.core.analysis.ILine;
 import org.jacoco.core.analysis.IMethodCoverage;
 import org.jacoco.core.data.SessionInfo;
+import org.jacoco.report.internal.xml.ReportElement;
+import org.jacoco.report.internal.xml.XMLElement;
 
 /**
  * A {@link XMLElement} with utility methods to create JaCoCo XML reports.

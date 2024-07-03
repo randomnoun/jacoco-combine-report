@@ -10,12 +10,14 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jacoco.report.internal.html.table.Entry;
 
 /**
  * A index on a list of items sorted with a given {@link Comparator}. The index

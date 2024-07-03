@@ -10,9 +10,11 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;
 
 import org.jacoco.core.analysis.ICoverageNode;
+import org.jacoco.report.check.Limit;
+import org.jacoco.report.check.Rule;
 
 /**
  * Call-back interface which is used to report rule violations to.

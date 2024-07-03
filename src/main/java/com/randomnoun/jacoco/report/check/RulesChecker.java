@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +25,9 @@ import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.IReportVisitor;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.JavaNames;
+import org.jacoco.report.check.BundleChecker;
+import org.jacoco.report.check.IViolationsOutput;
+import org.jacoco.report.check.Rule;
 
 /**
  * Formatter which checks a set of given rules and reports violations to a

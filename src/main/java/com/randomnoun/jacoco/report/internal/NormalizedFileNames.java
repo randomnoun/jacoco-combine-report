@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal;
+package com.randomnoun.jacoco.report.internal;
 
 import java.util.BitSet;
 import java.util.HashMap;

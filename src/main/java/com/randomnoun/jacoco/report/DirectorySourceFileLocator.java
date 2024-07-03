@@ -10,12 +10,14 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.jacoco.report.InputStreamSourceFileLocator;
 
 /**
  * Locator for source files that picks source files from a given directory in

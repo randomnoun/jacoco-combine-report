@@ -10,17 +10,19 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import java.io.IOException;
 
 import org.jacoco.core.JaCoCo;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.IHTMLReportContext;
 import org.jacoco.report.internal.html.ILinkable;
+import org.jacoco.report.internal.html.page.ReportPage;
 import org.jacoco.report.internal.html.resources.Resources;
 import org.jacoco.report.internal.html.resources.Styles;
+
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
  * Base class for HTML page generators. It renders the page skeleton with the

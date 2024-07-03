@@ -14,4 +14,4 @@
 /**
  * CSV report implementation.
  */
-package org.jacoco.report.csv;
+package com.randomnoun.jacoco.report.csv;

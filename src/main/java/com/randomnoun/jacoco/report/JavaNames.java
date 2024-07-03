@@ -10,8 +10,9 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
+import org.jacoco.report.ILanguageNames;
 import org.objectweb.asm.Type;
 
 /**

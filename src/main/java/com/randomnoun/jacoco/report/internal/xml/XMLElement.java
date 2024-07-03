@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.xml;
+package com.randomnoun.jacoco.report.internal.xml;
 
 import static java.lang.String.format;
 
@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
+import org.jacoco.report.internal.xml.XMLElement;
 
 /**
  * Simple API to create well formed XML streams with minimal memory overhead. A

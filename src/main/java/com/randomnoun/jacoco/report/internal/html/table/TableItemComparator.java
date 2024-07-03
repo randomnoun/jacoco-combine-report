@@ -10,11 +10,12 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import java.util.Comparator;
 
 import org.jacoco.core.analysis.ICoverageNode;
+import org.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Adapter to sort table items based on their coverage nodes.

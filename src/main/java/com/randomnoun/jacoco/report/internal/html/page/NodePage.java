@@ -10,14 +10,16 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.IHTMLReportContext;
+import org.jacoco.report.internal.html.page.ReportPage;
 import org.jacoco.report.internal.html.resources.Resources;
 import org.jacoco.report.internal.html.resources.Styles;
 import org.jacoco.report.internal.html.table.ITableItem;
+
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
  * Report page that represents a coverage node.

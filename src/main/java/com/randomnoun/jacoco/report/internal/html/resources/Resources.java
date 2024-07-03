@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.resources;
+package com.randomnoun.jacoco.report.internal.html.resources;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +18,8 @@ import java.io.OutputStream;
 
 import org.jacoco.core.analysis.ICoverageNode.ElementType;
 import org.jacoco.report.internal.ReportOutputFolder;
+import org.jacoco.report.internal.html.resources.Resources;
+import org.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Static resource that are included with the coverage report and might be

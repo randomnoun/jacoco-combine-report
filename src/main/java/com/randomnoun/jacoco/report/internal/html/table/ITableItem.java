@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.internal.html.ILinkable;

@@ -10,11 +10,13 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.IOException;
 
 import org.jacoco.core.analysis.IBundleCoverage;
+import org.jacoco.report.IReportGroupVisitor;
+import org.jacoco.report.ISourceFileLocator;
 
 /**
  * Output-Interface for hierarchical report structures. To allow sequential

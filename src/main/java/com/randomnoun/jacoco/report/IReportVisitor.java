@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.SessionInfo;
+import org.jacoco.report.IReportGroupVisitor;
 
 /**
  * Interface for all implementations to retrieve structured report data. Unlike

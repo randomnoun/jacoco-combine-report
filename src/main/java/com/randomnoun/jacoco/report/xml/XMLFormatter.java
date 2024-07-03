@@ -10,7 +10,7 @@
  *    Brock Janiczak -initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.xml;
+package com.randomnoun.jacoco.report.xml;
 
 import java.io.IOException;
 import java.io.OutputStream;

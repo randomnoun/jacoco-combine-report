@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import static java.lang.String.format;
 
@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import org.jacoco.report.IMultiReportOutput;
 
 /**
  * Implementation of {@link IMultiReportOutput} that writes files directly to a

@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -27,6 +27,9 @@ import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
 import org.jacoco.report.internal.html.resources.Resources;
+import org.jacoco.report.internal.html.table.IColumnRenderer;
+import org.jacoco.report.internal.html.table.ITableItem;
+import org.jacoco.report.internal.html.table.TableItemComparator;
 
 /**
  * Column that prints the coverage percentage for each item and the total

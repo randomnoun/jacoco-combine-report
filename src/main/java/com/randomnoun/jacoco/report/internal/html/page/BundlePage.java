@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import java.io.IOException;
 
@@ -20,7 +20,11 @@ import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.IHTMLReportContext;
+import org.jacoco.report.internal.html.page.PackagePage;
+import org.jacoco.report.internal.html.page.ReportPage;
+import org.jacoco.report.internal.html.page.TablePage;
+
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
  * Page showing coverage information for a bundle. The page contains a table

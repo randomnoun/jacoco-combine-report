@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +22,9 @@ import org.jacoco.core.analysis.IMethodCoverage;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.jacoco.report.ILanguageNames;
+import org.jacoco.report.check.IViolationsOutput;
+import org.jacoco.report.check.Limit;
+import org.jacoco.report.check.Rule;
 
 /**
  * Internal class to check a list of rules against a {@link IBundleCoverage}

@@ -14,4 +14,4 @@
 /**
  * Common interfaces and utilities for report generation.
  */
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;

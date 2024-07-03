@@ -14,4 +14,4 @@
 /**
  * Internal: Index generation for HTML reports.
  */
-package org.jacoco.report.internal.html.index;
+package com.randomnoun.jacoco.report.internal.html.index;

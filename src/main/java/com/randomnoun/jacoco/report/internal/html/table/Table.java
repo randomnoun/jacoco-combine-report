@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +23,11 @@ import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
 import org.jacoco.report.internal.html.resources.Resources;
 import org.jacoco.report.internal.html.resources.Styles;
+import org.jacoco.report.internal.html.table.Column;
+import org.jacoco.report.internal.html.table.IColumnRenderer;
+import org.jacoco.report.internal.html.table.ITableItem;
+import org.jacoco.report.internal.html.table.SortIndex;
+import org.jacoco.report.internal.html.table.Table;
 
 /**
  * Renderer for a table of {@link ITableItem}s.

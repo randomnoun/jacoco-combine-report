@@ -14,4 +14,4 @@
 /**
  * Internal: Resources for HTML reports.
  */
-package org.jacoco.report.internal.html.resources;
+package com.randomnoun.jacoco.report.internal.html.resources;

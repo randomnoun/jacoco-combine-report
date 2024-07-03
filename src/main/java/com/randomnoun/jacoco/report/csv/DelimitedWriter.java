@@ -10,7 +10,7 @@
  *    Brock Janiczak - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.csv;
+package com.randomnoun.jacoco.report.csv;
 
 import java.io.IOException;
 import java.io.Writer;

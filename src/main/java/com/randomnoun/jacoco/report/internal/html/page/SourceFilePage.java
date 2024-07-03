@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import static java.lang.String.format;
 
@@ -20,8 +20,12 @@ import java.io.Reader;
 import org.jacoco.core.analysis.ISourceNode;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.IHTMLReportContext;
+import org.jacoco.report.internal.html.page.NodePage;
+import org.jacoco.report.internal.html.page.ReportPage;
+import org.jacoco.report.internal.html.page.SourceHighlighter;
 import org.jacoco.report.internal.html.resources.Resources;
+
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
  * Page showing the content of a source file with numbered and highlighted

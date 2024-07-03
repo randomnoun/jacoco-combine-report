@@ -10,7 +10,7 @@
  *    Brock Janiczak - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.csv;
+package com.randomnoun.jacoco.report.csv;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,6 +23,9 @@ import org.jacoco.core.data.SessionInfo;
 import org.jacoco.report.ILanguageNames;
 import org.jacoco.report.IReportVisitor;
 import org.jacoco.report.JavaNames;
+import org.jacoco.report.csv.CSVGroupHandler;
+import org.jacoco.report.csv.ClassRowWriter;
+import org.jacoco.report.csv.DelimitedWriter;
 
 /**
  * Report formatter that will create a single CSV file. By default the filename

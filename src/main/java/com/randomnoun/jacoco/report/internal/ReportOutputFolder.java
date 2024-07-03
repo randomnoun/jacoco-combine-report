@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal;
+package com.randomnoun.jacoco.report.internal;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jacoco.report.IMultiReportOutput;
+import org.jacoco.report.internal.NormalizedFileNames;
+import org.jacoco.report.internal.ReportOutputFolder;
 
 /**
  * Logical representation of a folder in the output structure. This utility

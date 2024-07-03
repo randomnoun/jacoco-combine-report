@@ -14,4 +14,4 @@
 /**
  * HTML report implementation.
  */
-package org.jacoco.report.html;
+package com.randomnoun.jacoco.report.html;

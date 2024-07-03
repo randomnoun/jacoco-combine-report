@@ -14,4 +14,4 @@
 /**
  * Internal: Sortable HTML table for coverage node elements.
  */
-package org.jacoco.report.internal.html.table;
+package com.randomnoun.jacoco.report.internal.html.table;

@@ -10,7 +10,7 @@
  *    Brock Janiczak - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.csv;
+package com.randomnoun.jacoco.report.csv;
 
 import java.io.IOException;
 
@@ -18,6 +18,7 @@ import org.jacoco.core.analysis.IClassCoverage;
 import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
 import org.jacoco.report.ILanguageNames;
+import org.jacoco.report.csv.DelimitedWriter;
 
 /**
  * Writer for rows in the CVS report representing the summary data of a single

@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.ISourceFileCoverage;

@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.index;
+package com.randomnoun.jacoco.report.internal.html.index;
 
 import org.jacoco.report.internal.html.ILinkable;
 

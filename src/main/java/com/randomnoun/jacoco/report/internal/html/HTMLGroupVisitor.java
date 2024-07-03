@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html;
+package com.randomnoun.jacoco.report.internal.html;
 
 import java.io.IOException;
 
@@ -19,10 +19,13 @@ import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.internal.AbstractGroupVisitor;
 import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.page.BundlePage;
+import org.jacoco.report.internal.html.HTMLGroupVisitor;
+import org.jacoco.report.internal.html.IHTMLReportContext;
 import org.jacoco.report.internal.html.page.GroupPage;
 import org.jacoco.report.internal.html.page.NodePage;
-import org.jacoco.report.internal.html.page.ReportPage;
+
+import com.randomnoun.jacoco.report.internal.html.page.BundlePage;
+import com.randomnoun.jacoco.report.internal.html.page.ReportPage;
 
 /**
  * Group visitor for HTML reports.

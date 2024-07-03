@@ -14,4 +14,4 @@
 /**
  * XML report implementation.
  */
-package org.jacoco.report.xml;
+package com.randomnoun.jacoco.report.xml;

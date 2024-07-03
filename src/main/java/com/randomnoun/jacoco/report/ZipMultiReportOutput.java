@@ -10,12 +10,15 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.jacoco.report.EntryOutput;
+import org.jacoco.report.IMultiReportOutput;
 
 /**
  * Implementation of {@link IMultiReportOutput} that writes files into a

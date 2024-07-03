@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.resources;
+package com.randomnoun.jacoco.report.internal.html.resources;
 
 /**
  * Constants for styles defined by the report style sheet.

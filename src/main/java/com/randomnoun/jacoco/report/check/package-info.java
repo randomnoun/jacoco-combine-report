@@ -14,4 +14,4 @@
 /**
  * Rules check implementation.
  */
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;

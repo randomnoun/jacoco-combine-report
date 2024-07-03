@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.internal.html.page;
+package com.randomnoun.jacoco.report.internal.html.page;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,9 +19,12 @@ import java.util.List;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.internal.ReportOutputFolder;
 import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.IHTMLReportContext;
+import org.jacoco.report.internal.html.page.NodePage;
+import org.jacoco.report.internal.html.page.ReportPage;
 import org.jacoco.report.internal.html.resources.Resources;
 import org.jacoco.report.internal.html.table.ITableItem;
+
+import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
  * Report page that contains a table of items linked to other pages.

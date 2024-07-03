@@ -10,7 +10,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report.check;
+package com.randomnoun.jacoco.report.check;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,6 +21,7 @@ import java.util.Map;
 import org.jacoco.core.analysis.ICounter.CounterValue;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
+import org.jacoco.report.check.Rule;
 
 /**
  * Descriptor for a limit which is given by a {@link Rule}.

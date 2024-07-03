@@ -10,12 +10,14 @@
  *    Marc R. Hoffmann - initial API and implementation
  *
  *******************************************************************************/
-package org.jacoco.report;
+package com.randomnoun.jacoco.report;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
+import org.jacoco.report.ISourceFileLocator;
 
 /**
  * Abstract base class for {@link ISourceFileLocator} locator implementations

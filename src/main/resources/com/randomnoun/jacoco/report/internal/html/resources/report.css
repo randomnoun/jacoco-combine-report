@@ -105,6 +105,14 @@ pre.source span.pc {
   background-color:#ffffcc;
 }
 
+pre.source span.bfc,
+pre.source span.bnc,
+pre.source span.bpc,
+pre.source span.bskip {
+	display: inline-block;
+	width: 15px; 
+}
+
 pre.source span.bfc {
   background-image: url(branchfc.gif);
   background-repeat: no-repeat;
@@ -114,6 +122,7 @@ pre.source span.bfc {
 pre.source span.bfc:hover {
   background-color:#80ff80;
 }
+
 
 pre.source span.bnc {
   background-image: url(branchnc.gif);
@@ -204,6 +213,16 @@ table.coverage tbody td.ctr2 {
   padding-right:14px;
   padding-left:2px;
 }
+
+table.coverage thead td.divider {
+  border-right: solid 1px black;
+}
+
+table.coverage tbody td.divider {
+  border-right: solid 1px black;
+}
+
+
 
 table.coverage tfoot td {
   white-space:nowrap;

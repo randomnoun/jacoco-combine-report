@@ -27,23 +27,22 @@ import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.IReportVisitor;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.JavaNames;
-import org.jacoco.report.html.HTMLFormatter;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.index.ElementIndex;
-import org.jacoco.report.internal.html.index.IIndexUpdate;
-import org.jacoco.report.internal.html.page.SessionsPage;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.resources.Styles;
-import org.jacoco.report.internal.html.table.BarColumn;
-import org.jacoco.report.internal.html.table.CounterColumn;
-import org.jacoco.report.internal.html.table.LabelColumn;
-import org.jacoco.report.internal.html.table.PercentageColumn;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 import com.randomnoun.jacoco.report.internal.html.HTMLGroupVisitor;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.index.ElementIndex;
+import com.randomnoun.jacoco.report.internal.html.index.IIndexUpdate;
 import com.randomnoun.jacoco.report.internal.html.page.BundlePage;
 import com.randomnoun.jacoco.report.internal.html.page.ReportPage;
+import com.randomnoun.jacoco.report.internal.html.page.SessionsPage;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
+import com.randomnoun.jacoco.report.internal.html.table.BarColumn;
+import com.randomnoun.jacoco.report.internal.html.table.CounterColumn;
+import com.randomnoun.jacoco.report.internal.html.table.LabelColumn;
+import com.randomnoun.jacoco.report.internal.html.table.PercentageColumn;
 import com.randomnoun.jacoco.report.internal.html.table.Table;
 
 /**
@@ -125,37 +124,49 @@ public class HTMLFormatter implements IHTMLReportContext {
 		return resources;
 	}
 
-	public Table getTable() {
+	public Table getTable(IBundleCoverage[] bundles) {
 		if (table == null) {
-			table = createTable();
+			table = createTable(bundles);
 		}
 		return table;
 	}
 
-	private Table createTable() {
+	private Table createTable(IBundleCoverage[] bundles) {
 		final Table t = new Table();
-		t.add("Element", null, new LabelColumn(), false);
-		t.add("Missed Instructions", Styles.BAR,
-				new BarColumn(CounterEntity.INSTRUCTION, locale), true);
-		t.add("Cov.", Styles.CTR2,
-				new PercentageColumn(CounterEntity.INSTRUCTION, locale), false);
-		t.add("Missed Branches", Styles.BAR,
-				new BarColumn(CounterEntity.BRANCH, locale), false);
-		t.add("Cov.", Styles.CTR2,
-				new PercentageColumn(CounterEntity.BRANCH, locale), false);
-		addMissedTotalColumns(t, "Cxty", CounterEntity.COMPLEXITY);
-		addMissedTotalColumns(t, "Lines", CounterEntity.LINE);
-		addMissedTotalColumns(t, "Methods", CounterEntity.METHOD);
-		addMissedTotalColumns(t, "Classes", CounterEntity.CLASS);
+		t.add("", "Element", Styles.DIVIDER, new LabelColumn(), false);
+		int numBundle = bundles.length;
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			t.add(bundles[i].getName(), "Missed Instructions", Styles.BAR, new BarColumn(i, CounterEntity.INSTRUCTION, locale), i == 0);
+			t.add("", "Cov.", Styles.CTR2 + dividerStyle, new PercentageColumn(i, CounterEntity.INSTRUCTION, locale), false);
+		}
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			t.add(bundles[i].getName(), "Missed Branches", Styles.BAR, new BarColumn(i, CounterEntity.BRANCH, locale), false);
+			t.add("", "Cov.", Styles.CTR2 + dividerStyle, new PercentageColumn(i, CounterEntity.BRANCH, locale), false);
+		}
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			addMissedTotalColumns(t, bundles[i].getName(), "Cxty", dividerStyle, i, CounterEntity.COMPLEXITY);
+		}
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			addMissedTotalColumns(t, bundles[i].getName(), "Lines", dividerStyle, i, CounterEntity.LINE);
+		}
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			addMissedTotalColumns(t, bundles[i].getName(), "Methods", dividerStyle, i, CounterEntity.METHOD);
+		}
+		for (int i = 0; i < numBundle; i++) {
+			String dividerStyle = (i==numBundle-1 ? " " + Styles.DIVIDER : "");
+			addMissedTotalColumns(t, bundles[i].getName(), "Classes", dividerStyle, i, CounterEntity.CLASS);
+		}
 		return t;
 	}
 
-	private void addMissedTotalColumns(final Table table, final String label,
-			final CounterEntity entity) {
-		table.add("Missed", Styles.CTR1,
-				CounterColumn.newMissed(entity, locale), false);
-		table.add(label, Styles.CTR2, CounterColumn.newTotal(entity, locale),
-				false);
+	private void addMissedTotalColumns(final Table table, String headerLabel, final String label, String dividerStyle, int itemIdx, final CounterEntity entity) {
+		table.add(headerLabel, "Missed", Styles.CTR1, CounterColumn.newMissed(itemIdx, entity, locale), false);
+		table.add("", label, Styles.CTR2 + dividerStyle, CounterColumn.newTotal(itemIdx, entity, locale), false);
 	}
 
 	public String getFooterText() {
@@ -177,6 +188,11 @@ public class HTMLFormatter implements IHTMLReportContext {
 	public Locale getLocale() {
 		return locale;
 	}
+	
+	public interface INewReportVisitor extends IReportVisitor {
+		public void visitBundles(final IBundleCoverage[] bundles,
+			final ISourceFileLocator locator) throws IOException;
+	}
 
 	/**
 	 * Creates a new visitor to write a report to the given output.
@@ -187,13 +203,14 @@ public class HTMLFormatter implements IHTMLReportContext {
 	 * @throws IOException
 	 *             in case of problems with the output stream
 	 */
-	public IReportVisitor createVisitor(final IMultiReportOutput output)
+	public INewReportVisitor createVisitor(final IMultiReportOutput output)
 			throws IOException {
 		final ReportOutputFolder root = new ReportOutputFolder(output);
 		resources = new Resources(root);
 		resources.copyResources();
 		index = new ElementIndex(root);
-		return new IReportVisitor() {
+		
+		return new INewReportVisitor() {
 
 			private List<SessionInfo> sessionInfos;
 			private Collection<ExecutionData> executionData;
@@ -209,7 +226,12 @@ public class HTMLFormatter implements IHTMLReportContext {
 
 			public void visitBundle(final IBundleCoverage bundle,
 					final ISourceFileLocator locator) throws IOException {
-				final BundlePage page = new BundlePage(bundle, null, locator,
+				throw new UnsupportedOperationException("not this one");
+			}
+			
+			public void visitBundles(final IBundleCoverage[] bundles,
+					final ISourceFileLocator locator) throws IOException {
+				final BundlePage page = new BundlePage(bundles, null, locator,
 						root, HTMLFormatter.this);
 				createSessionsPage(page);
 				page.render();

@@ -19,7 +19,6 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ICoverageNode.ElementType;
 import org.jacoco.report.IReportGroupVisitor;
 import org.jacoco.report.ISourceFileLocator;
-import org.jacoco.report.internal.AbstractGroupVisitor;
 
 /**
  * Internal base visitor to calculate group counter summaries for hierarchical
@@ -28,7 +27,7 @@ import org.jacoco.report.internal.AbstractGroupVisitor;
 public abstract class AbstractGroupVisitor implements IReportGroupVisitor {
 
 	/** coverage node for this group to total counters */
-	protected final CoverageNodeImpl total;
+	protected final CoverageNodeImpl[] totals;
 
 	private AbstractGroupVisitor lastChild;
 
@@ -39,16 +38,26 @@ public abstract class AbstractGroupVisitor implements IReportGroupVisitor {
 	 *            name for the coverage node created internally
 	 */
 	protected AbstractGroupVisitor(final String name) {
-		total = new CoverageNodeImpl(ElementType.GROUP, name);
+		totals = null; // new CoverageNodeImpl(ElementType.GROUP, name);
 	}
 
-	public final void visitBundle(final IBundleCoverage bundle,
+	public final void visitBundles(final IBundleCoverage[] bundles,
 			final ISourceFileLocator locator) throws IOException {
 		finalizeLastChild();
-		total.increment(bundle);
-		handleBundle(bundle, locator);
+		for (int i=0; i<bundles.length; i++) {
+			totals[i].increment(bundles[i]);
+			
+		}
+		handleBundles(bundles, locator);
+	}
+	
+	public void visitBundle(IBundleCoverage bundle, ISourceFileLocator locator) throws IOException {
+		throw new UnsupportedOperationException("call the other one");
 	}
 
+
+	// **** might have to pass index to each of these, or change to array params
+	
 	/**
 	 * Called to handle the given bundle in a specific way.
 	 *
@@ -59,7 +68,7 @@ public abstract class AbstractGroupVisitor implements IReportGroupVisitor {
 	 * @throws IOException
 	 *             if the report can't be written
 	 */
-	protected abstract void handleBundle(IBundleCoverage bundle,
+	protected abstract void handleBundles(IBundleCoverage[] bundles,
 			ISourceFileLocator locator) throws IOException;
 
 	public final IReportGroupVisitor visitGroup(final String name)
@@ -103,7 +112,9 @@ public abstract class AbstractGroupVisitor implements IReportGroupVisitor {
 	private void finalizeLastChild() throws IOException {
 		if (lastChild != null) {
 			lastChild.visitEnd();
-			total.increment(lastChild.total);
+			for (int i=0; i<totals.length; i++) {
+				totals[0].increment(lastChild.totals[0]);
+			}
 			lastChild = null;
 		}
 	}

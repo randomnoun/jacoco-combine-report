@@ -74,6 +74,9 @@ public final class Styles {
 	/** Table header for column sorted downwards */
 	public static final String DOWN = "down";
 
+	/** Table header for last bundle column ( adds border to right edge of cell */
+	public static final String DIVIDER = "divider";
+
 	/** Block of source code */
 	public static final String SOURCE = "source";
 
@@ -88,6 +91,9 @@ public final class Styles {
 
 	/** Part of source code where instructions are is fully covered */
 	public static final String FULLY_COVERED = "fc";
+
+	/** Part of source code where no branch info available */
+	public static final String BRANCH_SKIP = "bskip";
 
 	/** Part of source code where branches are not covered */
 	public static final String BRANCH_NOT_COVERED = "bnc";

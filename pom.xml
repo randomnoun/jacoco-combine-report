@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -9,13 +8,13 @@
     </parent>
 
     <groupId>com.randomnoun.common</groupId>
-    <artifactId>jacoco-report</artifactId>
+    <artifactId>jacoco-combine-report</artifactId>
     <packaging>jar</packaging>
     <version>0.0.4</version>
     
-    <name>jacoco-report</name>
+    <name>jacoco-combine-report</name>
     <description>A Jacoco report which includes side-by-side comparisons of multiple execution runs</description>
-    <url>https://randomnoun.github.io/jacoco-report/</url>
+    <url>https://randomnoun.github.io/jacoco-combine-report/</url>
     <inceptionYear>2024-07-03</inceptionYear>
 
     <properties>
@@ -54,44 +53,54 @@
 
     <build>
         <pluginManagement>
-          <plugins>
-              <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
-                <!-- 
-                  this configuration is used during the javadoc:jar goal during the release
-                  configuration for the reports is in the <reporting> section  
-                -->
-                <configuration>
-                    <additionalparam>-Xdoclint:none</additionalparam>
-                    <failOnError>false</failOnError>
-                    <sourcepath>src/main/java</sourcepath>
-                    <javadocDirectory>${project.basedir}/src/main/javadoc</javadocDirectory>
-                    <docfilessubdirs>true</docfilessubdirs>
-                    <author>true</author>
-                    <linksource>true</linksource>
-                </configuration>
-            </plugin>
-          </plugins>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <!-- 
+                      this configuration is used during the javadoc:jar goal during the release
+                      configuration for the reports is in the <reporting> section  
+                    -->
+                    <configuration>
+                        <additionalparam>-Xdoclint:none</additionalparam>
+                        <failOnError>false</failOnError>
+                        <sourcepath>src/main/java</sourcepath>
+                        <javadocDirectory>${project.basedir}/src/main/javadoc</javadocDirectory>
+                        <docfilessubdirs>true</docfilessubdirs>
+                        <author>true</author>
+                        <linksource>true</linksource>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 
     <!--  these are on github now. except for the bits on gitlab. -->
     <scm>
-        <connection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git</connection>
-        <developerConnection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git</developerConnection>
-        <url>http://gitlab.dev.randomnoun/randomnoun/jacoco-report</url>
-      <tag>jacoco-report-0.0.2</tag>
-  </scm>
+        <connection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report.git</connection>
+        <developerConnection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report.git</developerConnection>
+        <url>http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report</url>
+      <tag>jacoco-combine-report-0.0.2</tag>
+    </scm>
     
     <distributionManagement>
         <site>
             <id>gh-pages</id>
-            <name>jacoco-report Website</name>
-            <url>git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git?gh-pages#</url>
+            <name>jacoco-combine-report Website</name>
+            <url>git:http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report.git?gh-pages#</url>
         </site>
     </distributionManagement>
-    
 
 </project>

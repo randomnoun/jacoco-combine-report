@@ -1,62 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-   Copyright (c) 2009, 2024 Mountainminds GmbH & Co. KG and Contributors
-   This program and the accompanying materials are made available under
-   the terms of the Eclipse Public License 2.0 which is available at
-   http://www.eclipse.org/legal/epl-2.0
 
-   SPDX-License-Identifier: EPL-2.0
-
-   Contributors:
-      Evgeny Mandrikov - initial API and implementation
--->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.jacoco</groupId>
-    <artifactId>org.jacoco.build</artifactId>
-    <version>0.8.13-SNAPSHOT</version>
-    <relativePath>../org.jacoco.build</relativePath>
-  </parent>
+    <parent>
+        <artifactId>parent-pom</artifactId>
+        <groupId>com.randomnoun.build</groupId>
+        <version>1.30</version>
+    </parent>
 
-  <artifactId>org.jacoco.report</artifactId>
+    <groupId>com.randomnoun.common</groupId>
+    <artifactId>jacoco-report</artifactId>
+    <packaging>jar</packaging>
+    <version>0.0.4</version>
+    
+    <name>jacoco-report</name>
+    <description>A Jacoco report which includes side-by-side comparisons of multiple execution runs</description>
+    <url>https://randomnoun.github.io/jacoco-report/</url>
+    <inceptionYear>2024-07-03</inceptionYear>
 
-  <name>JaCoCo :: Report</name>
-  <description>JaCoCo Report</description>
+    <properties>
+        <jdk.version>17</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>org.jacoco.core</artifactId>
-    </dependency>
-  </dependencies>
+        
+        <dependency>
+            <groupId>com.randomnoun.common</groupId>
+            <artifactId>log4j-one</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope><!-- most downstream projects will provide their own logj4-compatible logging framework -->
+        </dependency>
+    
+        <!-- jacoco exec files -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
+            <version>0.8.11</version>            
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.report</artifactId> <!-- includes core -->
+            <version>0.8.11</version>            
+        </dependency>    
+    
+    </dependencies>
 
-  <build>
-    <sourceDirectory>src</sourceDirectory>
+    <build>
+        <pluginManagement>
+          <plugins>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <!-- 
+                  this configuration is used during the javadoc:jar goal during the release
+                  configuration for the reports is in the <reporting> section  
+                -->
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <failOnError>false</failOnError>
+                    <sourcepath>src/main/java</sourcepath>
+                    <javadocDirectory>${project.basedir}/src/main/javadoc</javadocDirectory>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <author>true</author>
+                    <linksource>true</linksource>
+                </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+    </build>
 
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <!--  these are on github now. except for the bits on gitlab. -->
+    <scm>
+        <connection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git</connection>
+        <developerConnection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git</developerConnection>
+        <url>http://gitlab.dev.randomnoun/randomnoun/jacoco-report</url>
+      <tag>jacoco-report-0.0.2</tag>
+  </scm>
+    
+    <distributionManagement>
+        <site>
+            <id>gh-pages</id>
+            <name>jacoco-report Website</name>
+            <url>git:http://gitlab.dev.randomnoun/randomnoun/jacoco-report.git?gh-pages#</url>
+        </site>
+    </distributionManagement>
+    
+
 </project>

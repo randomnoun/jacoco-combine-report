@@ -1,4 +1,5 @@
 /.project
 /.settings/
+/src/test/java/
 /target/
 /.classpath

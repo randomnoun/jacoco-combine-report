@@ -14,11 +14,11 @@ package com.randomnoun.jacoco.report.internal.html;
 
 import java.util.Locale;
 
+import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.report.ILanguageNames;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.index.IIndexUpdate;
-import org.jacoco.report.internal.html.resources.Resources;
 
+import com.randomnoun.jacoco.report.internal.html.index.IIndexUpdate;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
 import com.randomnoun.jacoco.report.internal.html.table.Table;
 
 /**
@@ -45,7 +45,7 @@ public interface IHTMLReportContext {
 	 *
 	 * @return table for rendering
 	 */
-	Table getTable();
+	Table getTable(IBundleCoverage[] bundles);
 
 	/**
 	 * Returns a string of textual information to include in every page footer.

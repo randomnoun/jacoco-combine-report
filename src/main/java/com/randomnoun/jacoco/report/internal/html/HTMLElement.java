@@ -15,10 +15,8 @@ package com.randomnoun.jacoco.report.internal.html;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.xml.XMLElement;
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.xml.XMLElement;
 
 /**
  * A {@link XMLElement} with utility methods to create XHTML documents. It

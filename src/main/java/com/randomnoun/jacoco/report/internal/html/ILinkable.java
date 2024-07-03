@@ -12,7 +12,7 @@
  *******************************************************************************/
 package com.randomnoun.jacoco.report.internal.html;
 
-import org.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 
 /**
  * Abstraction for items that can be linked to in a report.

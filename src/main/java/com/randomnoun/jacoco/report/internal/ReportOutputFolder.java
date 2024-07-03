@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jacoco.report.IMultiReportOutput;
-import org.jacoco.report.internal.NormalizedFileNames;
-import org.jacoco.report.internal.ReportOutputFolder;
 
 /**
  * Logical representation of a folder in the output structure. This utility

@@ -1,3 +1,4 @@
+// tempted to split all this into a separate project
 /*******************************************************************************
  * Copyright (c) 2009, 2024 Mountainminds GmbH & Co. KG and Contributors
  * This program and the accompanying materials are made available under

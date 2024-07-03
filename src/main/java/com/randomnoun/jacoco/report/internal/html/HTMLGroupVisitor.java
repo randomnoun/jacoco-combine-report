@@ -17,14 +17,12 @@ import java.io.IOException;
 import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.report.ISourceFileLocator;
-import org.jacoco.report.internal.AbstractGroupVisitor;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLGroupVisitor;
-import org.jacoco.report.internal.html.IHTMLReportContext;
-import org.jacoco.report.internal.html.page.GroupPage;
-import org.jacoco.report.internal.html.page.NodePage;
 
+import com.randomnoun.jacoco.report.internal.AbstractGroupVisitor;
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 import com.randomnoun.jacoco.report.internal.html.page.BundlePage;
+import com.randomnoun.jacoco.report.internal.html.page.GroupPage;
+import com.randomnoun.jacoco.report.internal.html.page.NodePage;
 import com.randomnoun.jacoco.report.internal.html.page.ReportPage;
 
 /**
@@ -56,7 +54,7 @@ public class HTMLGroupVisitor extends AbstractGroupVisitor {
 		super(name);
 		this.folder = folder;
 		this.context = context;
-		page = new GroupPage(total, parent, folder, context);
+		page = new GroupPage(totals, parent, folder, context);
 	}
 
 	/**
@@ -69,14 +67,17 @@ public class HTMLGroupVisitor extends AbstractGroupVisitor {
 	}
 
 	@Override
-	protected void handleBundle(final IBundleCoverage bundle,
+	protected void handleBundles(final IBundleCoverage[] bundles,
 			final ISourceFileLocator locator) throws IOException {
-		final BundlePage bundlepage = new BundlePage(bundle, page, locator,
-				folder.subFolder(bundle.getName()), context);
+		final BundlePage bundlepage = new BundlePage(bundles, page, locator,
+				folder.subFolder(bundles[0].getName()), context);
 		bundlepage.render();
 		page.addItem(bundlepage);
 	}
 
+	
+	/**** not sure about this one, depends on what these groups represent */
+	
 	@Override
 	protected AbstractGroupVisitor handleGroup(final String name)
 			throws IOException {
@@ -90,5 +91,6 @@ public class HTMLGroupVisitor extends AbstractGroupVisitor {
 	protected void handleEnd() throws IOException {
 		page.render();
 	}
+
 
 }

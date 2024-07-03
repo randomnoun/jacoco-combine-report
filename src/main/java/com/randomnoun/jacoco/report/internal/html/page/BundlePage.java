@@ -18,12 +18,9 @@ import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.report.ISourceFileLocator;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.page.PackagePage;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.TablePage;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
@@ -34,7 +31,7 @@ public class BundlePage extends TablePage<ICoverageNode> {
 
 	private final ISourceFileLocator locator;
 
-	private IBundleCoverage bundle;
+	private IBundleCoverage[] bundles;
 
 	/**
 	 * Creates a new visitor in the given context.
@@ -50,12 +47,20 @@ public class BundlePage extends TablePage<ICoverageNode> {
 	 * @param context
 	 *            settings context
 	 */
-	public BundlePage(final IBundleCoverage bundle, final ReportPage parent,
+	public BundlePage(final IBundleCoverage[] bundles, final ReportPage parent,
 			final ISourceFileLocator locator, final ReportOutputFolder folder,
 			final IHTMLReportContext context) {
-		super(bundle.getPlainCopy(), parent, folder, context);
-		this.bundle = bundle;
+		super(getPlainCopies(bundles), parent, folder, context);
+		this.bundles = bundles;
 		this.locator = locator;
+	}
+
+	private static ICoverageNode[] getPlainCopies(IBundleCoverage[] bundles2) {
+		ICoverageNode[] result = new ICoverageNode[bundles2.length];
+		for (int i=0; i<result.length; i++) {
+			result[i] = bundles2[i].getPlainCopy();
+		}
+		return result;
 	}
 
 	@Override
@@ -63,18 +68,26 @@ public class BundlePage extends TablePage<ICoverageNode> {
 		renderPackages();
 		super.render();
 		// Don't keep the bundle structure in memory
-		bundle = null;
+		bundles = null;
 	}
 
 	private void renderPackages() throws IOException {
-		for (final IPackageCoverage p : bundle.getPackages()) {
+		for (final IPackageCoverage p : bundles[0].getPackages()) {
 			if (!p.containsCode()) {
 				continue;
 			}
 			final String packagename = p.getName();
+			// @TODO get all packages with the same name across all bundles
+			IPackageCoverage[] allPackages = new IPackageCoverage[bundles.length];
+			allPackages[0] = p;
+			for (int i=1; i<bundles.length; i++) {
+				allPackages[i] = bundles[i].getPackages().stream()
+					.filter(tmpP -> tmpP.getName().equals(packagename))
+					.findFirst().orElse(null);
+			}
 			final String foldername = packagename.length() == 0 ? "default"
 					: packagename.replace('/', '.');
-			final PackagePage page = new PackagePage(p, this, locator,
+			final PackagePage page = new PackagePage(allPackages, this, locator,
 					folder.subFolder(foldername), context);
 			page.render();
 			addItem(page);
@@ -90,12 +103,16 @@ public class BundlePage extends TablePage<ICoverageNode> {
 	protected String getFileName() {
 		return "index.html";
 	}
+	
+	public IBundleCoverage[] getBundles() {
+		return bundles;
+	}
 
 	@Override
 	protected void content(HTMLElement body) throws IOException {
-		if (bundle.getPackages().isEmpty()) {
+		if (bundles[0].getPackages().isEmpty()) {
 			body.p().text("No class files specified.");
-		} else if (!bundle.containsCode()) {
+		} else if (!bundles[0].containsCode()) {
 			body.p().text(
 					"None of the analyzed classes contain code relevant for code coverage.");
 		} else {

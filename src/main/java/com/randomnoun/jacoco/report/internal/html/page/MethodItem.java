@@ -15,25 +15,26 @@ package com.randomnoun.jacoco.report.internal.html.page;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.IMethodCoverage;
 import org.jacoco.core.analysis.ISourceNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.resources.Styles;
-import org.jacoco.report.internal.html.table.ITableItem;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
+import com.randomnoun.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Table items representing a method.
  */
 final class MethodItem implements ITableItem {
 
-	private final IMethodCoverage node;
+	private final IMethodCoverage[] nodes;
 
 	private final String label;
 
 	private final ILinkable sourcePage;
 
-	MethodItem(final IMethodCoverage node, final String label,
+	MethodItem(final IMethodCoverage[] nodes, final String label,
 			final ILinkable sourcePage) {
-		this.node = node;
+		this.nodes = nodes;
 		this.label = label;
 		this.sourcePage = sourcePage;
 	}
@@ -51,12 +52,12 @@ final class MethodItem implements ITableItem {
 			return null;
 		}
 		final String link = sourcePage.getLink(base);
-		final int first = node.getFirstLine();
+		final int first = nodes[0].getFirstLine();
 		return first != ISourceNode.UNKNOWN_LINE ? link + "#L" + first : link;
 	}
 
-	public ICoverageNode getNode() {
-		return node;
+	public ICoverageNode[] getNodes() {
+		return nodes;
 	}
 
 }

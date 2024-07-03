@@ -15,14 +15,14 @@ package com.randomnoun.jacoco.report.internal.html.page;
 import java.io.IOException;
 
 import org.jacoco.core.JaCoCo;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.resources.Styles;
+import org.jacoco.core.analysis.IBundleCoverage;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Base class for HTML page generators. It renders the page skeleton with the
@@ -64,6 +64,15 @@ public abstract class ReportPage implements ILinkable {
 	protected final boolean isRootPage() {
 		return parent == null;
 	}
+	
+	public BundlePage getParentBundlePage() {
+		// keep going back until we get to the bundle page
+		ReportPage tp = this;
+		while (tp != null && !(tp instanceof BundlePage)) {
+			tp = tp.parent;
+		}
+		return (BundlePage) tp;
+	}
 
 	/**
 	 * Renders this page's content and optionally additional pages. This method
@@ -91,12 +100,8 @@ public abstract class ReportPage implements ILinkable {
 	 */
 	protected void head(final HTMLElement head) throws IOException {
 		head.meta("Content-Type", "text/html;charset=UTF-8");
-		head.link("stylesheet",
-				context.getResources().getLink(folder, Resources.STYLESHEET),
-				"text/css");
-		head.link("shortcut icon",
-				context.getResources().getLink(folder, "report.gif"),
-				"image/gif");
+		head.link("stylesheet", context.getResources().getLink(folder, Resources.STYLESHEET), "text/css");		
+		head.link("shortcut icon", context.getResources().getLink(folder, "report.gif"), "image/gif");
 		head.title().text(getLinkLabel());
 	}
 

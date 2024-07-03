@@ -17,15 +17,13 @@ import static java.lang.String.format;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ISourceNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.page.NodePage;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.SourceHighlighter;
-import org.jacoco.report.internal.html.resources.Resources;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
 
 /**
  * Page showing the content of a source file with numbered and highlighted
@@ -53,7 +51,7 @@ public class SourceFilePage extends NodePage<ISourceNode> {
 	 * @param context
 	 *            settings context
 	 */
-	public SourceFilePage(final ISourceNode sourceFileNode,
+	public SourceFilePage(final ISourceNode[] sourceFileNode,
 			final Reader sourceReader, final int tabWidth,
 			final ReportPage parent, final ReportOutputFolder folder,
 			final IHTMLReportContext context) {
@@ -64,8 +62,9 @@ public class SourceFilePage extends NodePage<ISourceNode> {
 
 	@Override
 	protected void content(final HTMLElement body) throws IOException {
+		IBundleCoverage[] bundles = getParentBundlePage().getBundles();
 		final SourceHighlighter hl = new SourceHighlighter(context.getLocale());
-		hl.render(body, getNode(), sourceReader);
+		hl.render(body, bundles, getNodes(), sourceReader);
 		sourceReader.close();
 	}
 

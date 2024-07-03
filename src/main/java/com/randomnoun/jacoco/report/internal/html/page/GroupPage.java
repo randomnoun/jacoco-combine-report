@@ -13,10 +13,8 @@
 package com.randomnoun.jacoco.report.internal.html.page;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.TablePage;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 
 /**
@@ -37,9 +35,9 @@ public class GroupPage extends TablePage<ICoverageNode> {
 	 * @param context
 	 *            settings context
 	 */
-	public GroupPage(final ICoverageNode node, final ReportPage parent,
+	public GroupPage(final ICoverageNode[] nodes, final ReportPage parent,
 			final ReportOutputFolder folder, final IHTMLReportContext context) {
-		super(node, parent, folder, context);
+		super(nodes, parent, folder, context);
 	}
 
 	@Override

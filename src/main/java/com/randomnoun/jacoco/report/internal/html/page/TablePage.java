@@ -16,15 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.page.NodePage;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.table.ITableItem;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Report page that contains a table of items linked to other pages.
@@ -49,9 +48,9 @@ public abstract class TablePage<NodeType extends ICoverageNode>
 	 * @param context
 	 *            settings context
 	 */
-	protected TablePage(final NodeType node, final ReportPage parent,
+	protected TablePage(final NodeType[] nodes, final ReportPage parent,
 			final ReportOutputFolder folder, final IHTMLReportContext context) {
-		super(node, parent, folder, context);
+		super(nodes, parent, folder, context);
 	}
 
 	/**
@@ -68,14 +67,13 @@ public abstract class TablePage<NodeType extends ICoverageNode>
 	@Override
 	protected void head(final HTMLElement head) throws IOException {
 		super.head(head);
-		head.script(
-				context.getResources().getLink(folder, Resources.SORT_SCRIPT));
+		head.script(context.getResources().getLink(folder, Resources.SORT_SCRIPT));
 	}
 
 	@Override
 	protected void content(final HTMLElement body) throws IOException {
-		context.getTable().render(body, items, getNode(),
-				context.getResources(), folder);
+		IBundleCoverage[] bundles = getParentBundlePage().getBundles();
+		context.getTable(bundles).render(body, items, getNodes(), context.getResources(), folder);
 		// free memory, otherwise we will keep the complete page tree:
 		items.clear();
 	}

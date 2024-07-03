@@ -24,13 +24,12 @@ import java.util.List;
 import org.jacoco.core.data.ExecutionData;
 import org.jacoco.core.data.SessionInfo;
 import org.jacoco.report.ILanguageNames;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.index.ElementIndex;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.resources.Styles;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.index.ElementIndex;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Page to display information about sessions covered by this report.

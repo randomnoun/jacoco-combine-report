@@ -16,14 +16,12 @@ import java.io.IOException;
 
 import org.jacoco.core.analysis.IClassCoverage;
 import org.jacoco.core.analysis.IMethodCoverage;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.page.MethodItem;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.TablePage;
+import org.jacoco.core.analysis.IPackageCoverage;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
 
 /**
  * Page showing coverage information for a class as a table of methods. The
@@ -47,12 +45,12 @@ public class ClassPage extends TablePage<IClassCoverage> {
 	 * @param context
 	 *            settings context
 	 */
-	public ClassPage(final IClassCoverage classNode, final ReportPage parent,
+	public ClassPage(final IClassCoverage[] classNodes, final ReportPage parent,
 			final ILinkable sourcePage, final ReportOutputFolder folder,
 			final IHTMLReportContext context) {
-		super(classNode, parent, folder, context);
+		super(classNodes, parent, folder, context);
 		this.sourcePage = sourcePage;
-		context.getIndexUpdate().addClass(this, classNode.getId());
+		context.getIndexUpdate().addClass(this, classNodes[0].getId());
 	}
 
 	@Override
@@ -62,11 +60,20 @@ public class ClassPage extends TablePage<IClassCoverage> {
 
 	@Override
 	public void render() throws IOException {
-		for (final IMethodCoverage m : getNode().getMethods()) {
+		for (final IMethodCoverage m : getNodes()[0].getMethods()) {
 			final String label = context.getLanguageNames().getMethodName(
-					getNode().getName(), m.getName(), m.getDesc(),
+					getNodes()[0].getName(), m.getName(), m.getDesc(),
 					m.getSignature());
-			addItem(new MethodItem(m, label, sourcePage));
+			// match on name + signature
+			String match = m.getName() + m.getSignature();
+			IMethodCoverage[] allMethods = new IMethodCoverage[getNodes().length];
+			allMethods[0] = m;
+			for (int i=1; i<getNodes().length; i++) {
+				allMethods[i] = getNodes()[i].getMethods().stream()
+					.filter(tmpP -> (tmpP.getName() + tmpP.getSignature()).equals(match))
+					.findFirst().orElse(null);
+			}
+			addItem(new MethodItem(allMethods, label, sourcePage));
 		}
 		super.render();
 	}

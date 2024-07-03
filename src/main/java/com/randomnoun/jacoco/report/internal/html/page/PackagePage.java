@@ -16,17 +16,14 @@ import java.io.IOException;
 
 import org.jacoco.core.analysis.IClassCoverage;
 import org.jacoco.core.analysis.IPackageCoverage;
+import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.jacoco.report.ISourceFileLocator;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.page.ClassPage;
-import org.jacoco.report.internal.html.page.PackageSourcePage;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.TablePage;
-import org.jacoco.report.internal.html.resources.Styles;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Page showing coverage information for a Java package. The page contains a
@@ -51,13 +48,15 @@ public class PackagePage extends TablePage<IPackageCoverage> {
 	 * @param context
 	 *            settings context
 	 */
-	public PackagePage(final IPackageCoverage node, final ReportPage parent,
+	public PackagePage(final IPackageCoverage[] nodes, final ReportPage parent,
 			final ISourceFileLocator locator, final ReportOutputFolder folder,
 			final IHTMLReportContext context) {
-		super(node, parent, folder, context);
-		packageSourcePage = new PackageSourcePage(node, parent, locator, folder,
+		super(nodes, parent, folder, context);
+		packageSourcePage = new PackageSourcePage(nodes, parent, locator, folder,
 				context, this);
-		sourceCoverageExists = !node.getSourceFiles().isEmpty();
+		
+		// @TODO or them all together
+		sourceCoverageExists = !nodes[0].getSourceFiles().isEmpty();
 	}
 
 	@Override
@@ -74,9 +73,19 @@ public class PackagePage extends TablePage<IPackageCoverage> {
 			if (!c.containsCode()) {
 				continue;
 			}
+			String className = c.getName();
+			IClassCoverage[] allClassCoverages = new IClassCoverage[getNodes().length];
+			allClassCoverages[0] = c;
+			for (int i=1; i<getNodes().length; i++) {
+				allClassCoverages[i] = getNodes()[i].getClasses().stream()
+					.filter(tmpCC -> tmpCC.getName().equals(className))
+					.findFirst().orElse(null);
+			}
+
+			
 			final ILinkable sourceFilePage = packageSourcePage
 					.getSourceFilePage(c.getSourceFileName());
-			final ClassPage page = new ClassPage(c, this, sourceFilePage,
+			final ClassPage page = new ClassPage(allClassCoverages, this, sourceFilePage,
 					folder, context);
 			page.render();
 			addItem(page);

@@ -13,13 +13,12 @@
 package com.randomnoun.jacoco.report.internal.html.page;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.resources.Styles;
-import org.jacoco.report.internal.html.table.ITableItem;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
+import com.randomnoun.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Report page that represents a coverage node.
@@ -30,7 +29,8 @@ import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
 public abstract class NodePage<NodeType extends ICoverageNode>
 		extends ReportPage implements ITableItem {
 
-	private final NodeType node;
+	// private final NodeType node;
+	private final NodeType[] nodes;
 
 	/**
 	 * Creates a new node page.
@@ -44,10 +44,10 @@ public abstract class NodePage<NodeType extends ICoverageNode>
 	 * @param context
 	 *            settings context
 	 */
-	protected NodePage(final NodeType node, final ReportPage parent,
+	protected NodePage(final NodeType[] nodes, final ReportPage parent,
 			final ReportOutputFolder folder, final IHTMLReportContext context) {
 		super(parent, folder, context);
-		this.node = node;
+		this.nodes = nodes;
 	}
 
 	// === ILinkable ===
@@ -56,18 +56,24 @@ public abstract class NodePage<NodeType extends ICoverageNode>
 		if (isRootPage()) {
 			return Styles.EL_REPORT;
 		} else {
-			return Resources.getElementStyle(node.getElementType());
+			return Resources.getElementStyle(nodes[0].getElementType());
 		}
 	}
 
 	public String getLinkLabel() {
-		return node.getName();
+		return nodes[0].getName();
 	}
 
 	// === ICoverageTableItem ===
 
+	
 	public NodeType getNode() {
-		return node;
+		return nodes[0];
+	}
+	
+
+	public NodeType[] getNodes() {
+		return nodes;
 	}
 
 }

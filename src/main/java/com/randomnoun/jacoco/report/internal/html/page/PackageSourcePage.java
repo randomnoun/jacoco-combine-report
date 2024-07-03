@@ -20,16 +20,12 @@ import java.util.Map;
 import org.jacoco.core.analysis.IPackageCoverage;
 import org.jacoco.core.analysis.ISourceFileCoverage;
 import org.jacoco.report.ISourceFileLocator;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.ILinkable;
-import org.jacoco.report.internal.html.page.ReportPage;
-import org.jacoco.report.internal.html.page.SourceFileItem;
-import org.jacoco.report.internal.html.page.SourceFilePage;
-import org.jacoco.report.internal.html.page.TablePage;
-import org.jacoco.report.internal.html.resources.Styles;
 
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
 import com.randomnoun.jacoco.report.internal.html.IHTMLReportContext;
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Page showing coverage information for a Java package. The page contains a
@@ -41,6 +37,8 @@ public class PackageSourcePage extends TablePage<IPackageCoverage> {
 	private final Map<String, ILinkable> sourceFilePages;
 	private final ILinkable packagePage;
 
+	private final IPackageCoverage[] nodes;
+	
 	/**
 	 * Creates a new visitor in the given context.
 	 *
@@ -57,11 +55,12 @@ public class PackageSourcePage extends TablePage<IPackageCoverage> {
 	 * @param packagePage
 	 *            page listing the classes of this package
 	 */
-	public PackageSourcePage(final IPackageCoverage node,
+	public PackageSourcePage(final IPackageCoverage[] nodes,
 			final ReportPage parent, final ISourceFileLocator locator,
 			final ReportOutputFolder folder, final IHTMLReportContext context,
 			final ILinkable packagePage) {
-		super(node, parent, folder, context);
+		super(nodes, parent, folder, context);
+		this.nodes = nodes;
 		this.locator = locator;
 		this.packagePage = packagePage;
 		this.sourceFilePages = new HashMap<String, ILinkable>();
@@ -89,13 +88,19 @@ public class PackageSourcePage extends TablePage<IPackageCoverage> {
 				continue;
 			}
 			final String sourcename = s.getName();
-			final Reader reader = locator.getSourceFile(packagename,
-					sourcename);
+			ISourceFileCoverage[] allSourceFileCoverages = new ISourceFileCoverage[nodes.length];
+			allSourceFileCoverages[0] = s;
+			for (int i=1; i<nodes.length; i++) {
+				allSourceFileCoverages[i] = nodes[i].getSourceFiles().stream()
+					.filter(tmpSFC -> tmpSFC.getName().equals(sourcename))
+					.findFirst().orElse(null);
+			}
+			
+			final Reader reader = locator.getSourceFile(packagename, sourcename);
 			if (reader == null) {
-				addItem(new SourceFileItem(s));
+				addItem(new SourceFileItem(allSourceFileCoverages)); // s
 			} else {
-				final SourceFilePage sourcePage = new SourceFilePage(s, reader,
-						locator.getTabWidth(), this, folder, context);
+				final SourceFilePage sourcePage = new SourceFilePage(allSourceFileCoverages, reader, locator.getTabWidth(), this, folder, context);
 				sourcePage.render();
 				sourceFilePages.put(sourcename, sourcePage);
 				addItem(sourcePage);

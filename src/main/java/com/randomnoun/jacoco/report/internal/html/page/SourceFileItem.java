@@ -14,9 +14,10 @@ package com.randomnoun.jacoco.report.internal.html.page;
 
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.ISourceFileCoverage;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.resources.Styles;
-import org.jacoco.report.internal.html.table.ITableItem;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
+import com.randomnoun.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Table items representing a source file which cannot be linked.
@@ -24,14 +25,14 @@ import org.jacoco.report.internal.html.table.ITableItem;
  */
 final class SourceFileItem implements ITableItem {
 
-	private final ICoverageNode node;
+	private final ICoverageNode[] nodes;
 
-	SourceFileItem(final ISourceFileCoverage node) {
-		this.node = node;
+	SourceFileItem(final ISourceFileCoverage[] nodes) {
+		this.nodes = nodes;
 	}
 
 	public String getLinkLabel() {
-		return node.getName();
+		return nodes[0].getName();
 	}
 
 	public String getLinkStyle() {
@@ -42,8 +43,8 @@ final class SourceFileItem implements ITableItem {
 		return null;
 	}
 
-	public ICoverageNode getNode() {
-		return node;
+	public ICoverageNode[] getNodes() {
+		return nodes;
 	}
 
 }

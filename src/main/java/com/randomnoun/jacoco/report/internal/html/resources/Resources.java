@@ -17,9 +17,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.jacoco.core.analysis.ICoverageNode.ElementType;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.resources.Styles;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
 
 /**
  * Static resource that are included with the coverage report and might be

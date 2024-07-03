@@ -18,9 +18,6 @@ import java.io.IOException;
 import org.jacoco.core.analysis.IBundleCoverage;
 import org.jacoco.report.ISourceFileLocator;
 import org.jacoco.report.internal.AbstractGroupVisitor;
-import org.jacoco.report.internal.xml.ReportElement;
-import org.jacoco.report.internal.xml.XMLCoverageWriter;
-import org.jacoco.report.internal.xml.XMLGroupVisitor;
 
 /**
  * A {@link org.jacoco.report.IReportGroupVisitor} that transforms the report

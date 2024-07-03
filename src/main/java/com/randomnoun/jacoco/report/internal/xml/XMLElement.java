@@ -19,8 +19,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import org.jacoco.report.internal.xml.XMLElement;
-
 /**
  * Simple API to create well formed XML streams with minimal memory overhead. A
  * {@link XMLElement} instance represents a single element in a XML document.

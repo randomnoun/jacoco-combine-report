@@ -10,7 +10,7 @@
     <groupId>com.randomnoun.common</groupId>
     <artifactId>jacoco-combine-report</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.5</version>
+    <version>0.0.6-SNAPSHOT</version>
     
     <name>jacoco-combine-report</name>
     <description>A Jacoco report which includes side-by-side comparisons of multiple execution runs</description>
@@ -92,7 +92,7 @@
         <connection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report.git</connection>
         <developerConnection>scm:git:http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report.git</developerConnection>
         <url>http://gitlab.dev.randomnoun/randomnoun/jacoco-combine-report</url>
-      <tag>jacoco-combine-report-0.0.5</tag>
+      <tag>jacoco-combine-report-0.0.2</tag>
     </scm>
     
     <distributionManagement>

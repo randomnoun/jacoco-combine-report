@@ -24,20 +24,21 @@ import org.jacoco.core.analysis.CounterComparator;
 import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.table.IColumnRenderer;
-import org.jacoco.report.internal.html.table.ITableItem;
-import org.jacoco.report.internal.html.table.TableItemComparator;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.table.Table.INewColumnRenderer;
 
 /**
  * Column that prints the coverage percentage for each item and the total
  * percentage in the footer. The implementation is stateless, instances might be
  * used in parallel.
  */
-public class PercentageColumn implements IColumnRenderer {
+public class PercentageColumn implements INewColumnRenderer {
 
+	private int itemIdx;
+	
 	private final CounterEntity entity;
 
 	private final NumberFormat percentageFormat;
@@ -53,7 +54,8 @@ public class PercentageColumn implements IColumnRenderer {
 	 * @param locale
 	 *            locale for rendering numbers
 	 */
-	public PercentageColumn(final CounterEntity entity, final Locale locale) {
+	public PercentageColumn(int itemIdx, final CounterEntity entity, final Locale locale) {
+		this.itemIdx = itemIdx;
 		this.entity = entity;
 		this.percentageFormat = NumberFormat.getPercentInstance(locale);
 		comparator = new TableItemComparator(
@@ -61,20 +63,20 @@ public class PercentageColumn implements IColumnRenderer {
 	}
 
 	public boolean init(final List<? extends ITableItem> items,
-			final ICoverageNode total) {
+			final ICoverageNode[] total) {
 		return true;
 	}
 
-	public void footer(final HTMLElement td, final ICoverageNode total,
+	public void footer(final HTMLElement td, final ICoverageNode[] total,
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
-		cell(td, total);
+		cell(td, total[itemIdx]);
 	}
 
 	public void item(final HTMLElement td, final ITableItem item,
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
-		cell(td, item.getNode());
+		cell(td, item.getNodes()[itemIdx]);
 	}
 
 	private void cell(final HTMLElement td, final ICoverageNode node)

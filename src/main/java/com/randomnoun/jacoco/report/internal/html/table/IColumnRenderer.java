@@ -17,10 +17,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.table.ITableItem;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
 
 /**
  * Renderer for a single column of a coverage table. The methods are always

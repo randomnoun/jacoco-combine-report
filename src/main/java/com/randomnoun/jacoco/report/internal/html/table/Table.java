@@ -19,15 +19,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.resources.Styles;
-import org.jacoco.report.internal.html.table.Column;
-import org.jacoco.report.internal.html.table.IColumnRenderer;
-import org.jacoco.report.internal.html.table.ITableItem;
-import org.jacoco.report.internal.html.table.SortIndex;
-import org.jacoco.report.internal.html.table.Table;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.resources.Styles;
 
 /**
  * Renderer for a table of {@link ITableItem}s.
@@ -48,6 +44,8 @@ public class Table {
 	/**
 	 * Adds a new column with the given properties to the table.
 	 *
+	 * @param headerTop
+	 *            column top header caption
 	 * @param header
 	 *            column header caption
 	 * @param style
@@ -60,14 +58,12 @@ public class Table {
 	 *            column. Only one column can be selected for default sorting.
 	 *
 	 */
-	public void add(final String header, final String style,
-			final IColumnRenderer renderer, final boolean defaultSorting) {
-		columns.add(new Column(columns.size(), header, style, renderer,
-				defaultSorting));
+	public void add(final String headerTop, final String header, final String style,
+			final INewColumnRenderer renderer, final boolean defaultSorting) {
+		columns.add(new Column(columns.size(), headerTop, header, style, renderer, defaultSorting));
 		if (defaultSorting) {
 			if (defaultComparator != null) {
-				throw new IllegalStateException(
-						"Default sorting only allowed for one column.");
+				throw new IllegalStateException("Default sorting only allowed for one column.");
 			}
 			this.defaultComparator = renderer.getComparator();
 		}
@@ -91,7 +87,7 @@ public class Table {
 	 *             in case of IO problems with the element output
 	 */
 	public void render(final HTMLElement parent,
-			final List<? extends ITableItem> items, final ICoverageNode total,
+			final List<? extends ITableItem> items, final ICoverageNode[] total,
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
 		final List<? extends ITableItem> sortedItems = sort(items);
@@ -103,15 +99,26 @@ public class Table {
 	}
 
 	private void header(final HTMLElement table,
-			final List<? extends ITableItem> items, final ICoverageNode total)
-			throws IOException {
+			final List<? extends ITableItem> items, final ICoverageNode[] total)
+			throws IOException 
+	{
+		// was hoping to create both header cells at the same time but that's not doing to work is it.
+		for (final Column c : columns) {
+			c.init(items, total);
+		}
+
+		final HTMLElement trTop = table.thead().tr();
+		for (final Column c : columns) {
+			c.headerTop(trTop);
+		}
+		
 		final HTMLElement tr = table.thead().tr();
 		for (final Column c : columns) {
-			c.init(tr, items, total);
+			c.header(tr);
 		}
 	}
 
-	private void footer(final HTMLElement table, final ICoverageNode total,
+	private void footer(final HTMLElement table, final ICoverageNode[] total,
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
 		final HTMLElement tr = table.tfoot().tr();
@@ -125,7 +132,7 @@ public class Table {
 			final ReportOutputFolder base) throws IOException {
 		final HTMLElement tbody = table.tbody();
 		int idx = 0;
-		for (final ITableItem item : items) {
+		for (final ITableItem item : items) { // hrm. this feels like an item is a row, which it isn't. maybe it is.
 			final HTMLElement tr = tbody.tr();
 			for (final Column c : columns) {
 				c.body(tr, idx, item, resources, base);
@@ -143,42 +150,107 @@ public class Table {
 		}
 		return items;
 	}
+	
+	public interface INewColumnRenderer /*extends IColumnRenderer*/ {
+		// colIndex now in constructor
+		boolean init(List<? extends ITableItem> items, ICoverageNode[] total);
+
+		
+		//void headerTop(final HTMLElement trTop);
+		//void header(final HTMLElement trTop);
+		
+		
+		/**
+		 * Renders the footer for this column.
+		 *
+		 * @param td
+		 *            the parent table cell
+		 * @param total
+		 *            the summary of all coverage data items in the table
+		 * @param resources
+		 *            static resources that might be referenced
+		 * @param base
+		 *            base folder of the table
+		 * @throws IOException
+		 *             in case of IO problems with the element output
+		 */
+		void footer(HTMLElement td, ICoverageNode[] total, Resources resources,
+				ReportOutputFolder base) throws IOException;
+
+		/**
+		 * Renders a single item in this column.
+		 *
+		 * @param td
+		 *            the parent table cell
+		 * @param item
+		 *            the item to display
+		 * @param resources
+		 *            static resources that might be referenced
+		 * @param base
+		 *            base folder of the table
+		 * @throws IOException
+		 *             in case of IO problems with the element output
+		 */
+		void item(HTMLElement td, ITableItem item, Resources resources,
+				ReportOutputFolder base) throws IOException;
+
+		/**
+		 * Returns the comparator to sort this table column.
+		 *
+		 * @return comparator for this column
+		 */
+		Comparator<ITableItem> getComparator();		
+	}
 
 	private static class Column {
 
 		private final char idprefix;
+		private final String topHeader;
 		private final String header;
-		private final IColumnRenderer renderer;
+		private final INewColumnRenderer renderer;
 		private final SortIndex<ITableItem> index;
 		private final String style, headerStyle;
 
 		private boolean visible;
 
-		Column(final int idx, final String header, final String style,
-				final IColumnRenderer renderer, final boolean defaultSorting) {
+		Column(final int idx, final String topHeader, final String header, final String style,
+				final INewColumnRenderer renderer, final boolean defaultSorting) {
 			this.idprefix = (char) ('a' + idx);
+			this.topHeader = topHeader;
 			this.header = header;
 			this.renderer = renderer;
 			index = new SortIndex<ITableItem>(renderer.getComparator());
 			this.style = style;
 			this.headerStyle = Styles.combine(
-					defaultSorting ? Styles.DOWN : null, Styles.SORTABLE,
-					style);
+				defaultSorting ? Styles.DOWN : null, Styles.SORTABLE,
+				style);
 		}
 
-		void init(final HTMLElement tr, final List<? extends ITableItem> items,
-				final ICoverageNode total) throws IOException {
+		void init(final List<? extends ITableItem> items, final ICoverageNode[] total) throws IOException {
+			
 			visible = renderer.init(items, total);
 			if (visible) {
 				index.init(items);
+			}	
+		}
+		void headerTop(final HTMLElement trTop) throws IOException {
+			if (visible) {
+				final HTMLElement tdTop = trTop.td(style); // or just .td("")
+				tdTop.text(topHeader);
+			}
+
+		}
+		void header(final HTMLElement tr) throws IOException {
+			if (visible) {
 				final HTMLElement td = tr.td(headerStyle);
 				td.attr("id", String.valueOf(idprefix));
 				td.attr("onclick", "toggleSort(this)");
 				td.text(header);
 			}
+			
 		}
 
-		void footer(final HTMLElement tr, final ICoverageNode total,
+		void footer(final HTMLElement tr, final ICoverageNode[] total,
 				final Resources resources, final ReportOutputFolder base)
 				throws IOException {
 			if (visible) {

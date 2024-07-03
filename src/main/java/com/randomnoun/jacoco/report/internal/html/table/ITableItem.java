@@ -13,7 +13,8 @@
 package com.randomnoun.jacoco.report.internal.html.table;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.html.ILinkable;
+
+import com.randomnoun.jacoco.report.internal.html.ILinkable;
 
 /**
  * Interface for a item (row) in a coverage data table.
@@ -25,6 +26,6 @@ public interface ITableItem extends ILinkable {
 	 *
 	 * @return node data
 	 */
-	ICoverageNode getNode();
+	ICoverageNode[] getNodes();
 
 }

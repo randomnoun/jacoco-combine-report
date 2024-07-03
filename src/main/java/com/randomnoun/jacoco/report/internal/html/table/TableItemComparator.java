@@ -15,7 +15,6 @@ package com.randomnoun.jacoco.report.internal.html.table;
 import java.util.Comparator;
 
 import org.jacoco.core.analysis.ICoverageNode;
-import org.jacoco.report.internal.html.table.ITableItem;
 
 /**
  * Adapter to sort table items based on their coverage nodes.
@@ -28,8 +27,9 @@ class TableItemComparator implements Comparator<ITableItem> {
 		this.comparator = comparator;
 	}
 
+	// sort on 0th item
 	public int compare(final ITableItem i1, final ITableItem i2) {
-		return comparator.compare(i1.getNode(), i2.getNode());
+		return comparator.compare(i1.getNodes()[0], i2.getNodes()[0]);
 	}
 
 }

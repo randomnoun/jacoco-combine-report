@@ -22,21 +22,21 @@ import org.jacoco.core.analysis.CounterComparator;
 import org.jacoco.core.analysis.ICounter;
 import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.analysis.ICoverageNode.CounterEntity;
-import org.jacoco.report.internal.ReportOutputFolder;
-import org.jacoco.report.internal.html.HTMLElement;
-import org.jacoco.report.internal.html.resources.Resources;
-import org.jacoco.report.internal.html.table.CounterColumn;
-import org.jacoco.report.internal.html.table.IColumnRenderer;
-import org.jacoco.report.internal.html.table.ITableItem;
-import org.jacoco.report.internal.html.table.TableItemComparator;
+
+import com.randomnoun.jacoco.report.internal.ReportOutputFolder;
+import com.randomnoun.jacoco.report.internal.html.HTMLElement;
+import com.randomnoun.jacoco.report.internal.html.resources.Resources;
+import com.randomnoun.jacoco.report.internal.html.table.Table.INewColumnRenderer;
 
 /**
  * Column that prints the counter values of entities for each item and a summary
  * in the footer. If the total number of items is zero, no column is emitted at
  * all. The implementation is stateful, instances must not be used in parallel.
  */
-public abstract class CounterColumn implements IColumnRenderer {
+public abstract class CounterColumn implements INewColumnRenderer {
 
+	
+	
 	/**
 	 * Creates a new column that shows the total count for the given entity.
 	 *
@@ -46,9 +46,9 @@ public abstract class CounterColumn implements IColumnRenderer {
 	 *            locale for rendering numbers
 	 * @return column instance
 	 */
-	public static CounterColumn newTotal(final CounterEntity entity,
+	public static CounterColumn newTotal(int itemIdx, final CounterEntity entity,
 			final Locale locale) {
-		return new CounterColumn(entity, locale,
+		return new CounterColumn(itemIdx, entity, locale,
 				CounterComparator.TOTALITEMS.reverse().on(entity)) {
 			@Override
 			protected int getValue(final ICounter counter) {
@@ -66,9 +66,9 @@ public abstract class CounterColumn implements IColumnRenderer {
 	 *            locale for rendering numbers
 	 * @return column instance
 	 */
-	public static CounterColumn newMissed(final CounterEntity entity,
+	public static CounterColumn newMissed(int itemIdx, final CounterEntity entity,
 			final Locale locale) {
-		return new CounterColumn(entity, locale,
+		return new CounterColumn(itemIdx, entity, locale,
 				CounterComparator.MISSEDITEMS.reverse().on(entity)) {
 			@Override
 			protected int getValue(final ICounter counter) {
@@ -86,9 +86,9 @@ public abstract class CounterColumn implements IColumnRenderer {
 	 *            locale for rendering numbers
 	 * @return column instance
 	 */
-	public static CounterColumn newCovered(final CounterEntity entity,
+	public static CounterColumn newCovered(int itemIdx, final CounterEntity entity,
 			final Locale locale) {
-		return new CounterColumn(entity, locale,
+		return new CounterColumn(itemIdx, entity, locale,
 				CounterComparator.COVEREDITEMS.reverse().on(entity)) {
 			@Override
 			protected int getValue(final ICounter counter) {
@@ -97,6 +97,8 @@ public abstract class CounterColumn implements IColumnRenderer {
 		};
 	}
 
+	private int itemIdx;
+	
 	private final CounterEntity entity;
 
 	private final NumberFormat integerFormat;
@@ -114,33 +116,34 @@ public abstract class CounterColumn implements IColumnRenderer {
 	 * @param comparator
 	 *            comparator for the nodes of this column
 	 */
-	protected CounterColumn(final CounterEntity entity, final Locale locale,
+	protected CounterColumn(int itemIdx, final CounterEntity entity, final Locale locale,
 			final Comparator<ICoverageNode> comparator) {
+		this.itemIdx = itemIdx;
 		this.entity = entity;
 		this.integerFormat = NumberFormat.getIntegerInstance(locale);
 		this.comparator = new TableItemComparator(comparator);
 	}
 
 	public boolean init(final List<? extends ITableItem> items,
-			final ICoverageNode total) {
+			final ICoverageNode[] total) {
 		for (final ITableItem i : items) {
-			if (i.getNode().getCounter(entity).getTotalCount() > 0) {
+			if (i.getNodes()[itemIdx].getCounter(entity).getTotalCount() > 0) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void footer(final HTMLElement td, final ICoverageNode total,
+	public void footer(final HTMLElement td, final ICoverageNode total[],
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
-		cell(td, total);
+		cell(td, total[itemIdx]);
 	}
 
 	public void item(final HTMLElement td, final ITableItem item,
 			final Resources resources, final ReportOutputFolder base)
 			throws IOException {
-		cell(td, item.getNode());
+		cell(td, item.getNodes()[itemIdx]);
 	}
 
 	private void cell(final HTMLElement td, final ICoverageNode node)
